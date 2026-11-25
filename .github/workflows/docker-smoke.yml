@@ -15,7 +15,7 @@ jobs:
       - run: docker run --rm --entrypoint python local-project -c 'import os; assert os.getuid() != 0'
       - name: Runtime smoke test
         run: |
-          docker run --name smoke local-project
+          docker run --name smoke --entrypoint sh local-project -ec 'rm -f /app/exports/forecast_12w.csv; exec python etl/etl_pipeline.py'
           docker cp smoke:/app/exports/forecast_12w.csv /tmp/forecast.csv
           test -s /tmp/forecast.csv
           python -c 'import csv; assert len(list(csv.reader(open("/tmp/forecast.csv")))) > 1'
