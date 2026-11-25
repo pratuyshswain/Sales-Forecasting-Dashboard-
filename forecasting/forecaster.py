@@ -56,7 +56,7 @@ def _build_series_index(series: pd.Series, last_date: pd.Timestamp) -> pd.Dateti
     return pd.date_range(start=last_date + timedelta(weeks=1), periods=FORECAST_HORIZON, freq="W")
 
 
-def _fit_holt_winters(series: pd.Series) -> tuple:
+def _fit_holt_winters(series: pd.Series) -> tuple | None:
     """
     Fit a Holt-Winters model to a weekly time series.
 
